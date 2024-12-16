@@ -1,0 +1,8 @@
+[package]
+name = "day3-pt1"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+num-bigint = "0.4.6"
+regex = "1.11.1"
