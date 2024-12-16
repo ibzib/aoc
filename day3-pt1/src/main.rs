@@ -5,7 +5,7 @@ use std::io::prelude::*;
 
 fn main() {
     let stdin = io::stdin();
-    let lines: Vec<String> = stdin.lock().lines().map(|l| l.unwrap()).collect();
+    let lines = stdin.lock().lines().map(|l| l.unwrap());
 
     let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
     let mut ans = BigInt::ZERO;
