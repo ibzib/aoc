@@ -1,6 +1,12 @@
 use std::io;
 use std::io::prelude::*;
 
+type VisitedMap = Vec<Vec<[bool; 4]>>;
+
+fn new_visited_map(height: usize, width: usize) -> VisitedMap {
+    return vec![vec![[false; 4]; width]; height];
+}
+
 const D: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
 
 fn get_next(pos: (usize, usize), delta: (isize, isize)) -> (usize, usize) {
@@ -10,11 +16,7 @@ fn get_next(pos: (usize, usize), delta: (isize, isize)) -> (usize, usize) {
     );
 }
 
-fn traverse(
-    lines: &Vec<Vec<u8>>,
-    start_pos: (usize, usize),
-    visited: &mut Vec<Vec<[bool; 4]>>,
-) -> bool {
+fn traverse(lines: &Vec<Vec<u8>>, start_pos: (usize, usize), visited: &mut VisitedMap) -> bool {
     let mut pos = start_pos;
     let mut d = 0;
     loop {
@@ -66,7 +68,7 @@ fn main() {
     let pos = pos_opt.unwrap();
 
     // Traverse the maze
-    let mut visited = vec![vec![[false; 4]; width]; height];
+    let mut visited = new_visited_map(height, width);
     traverse(&lines, pos, &mut visited);
 
     let mut ans = 0;
@@ -75,7 +77,7 @@ fn main() {
         for (j, &v) in line.iter().enumerate() {
             let vis = v.iter().fold(false, |a, &b| a || b);
             if vis && (i, j) != pos {
-                let mut visited_obstruction = vec![vec![[false; 4]; width]; height];
+                let mut visited_obstruction = new_visited_map(height, width);
                 lines[i][j] = b'#';
                 if traverse(&lines, pos, &mut visited_obstruction) {
                     ans += 1;
