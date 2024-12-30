@@ -17,7 +17,7 @@ fn main() {
     let mut ans = 0;
     for p in iproduct!(0..m, 0..n) {
         for q in iproduct!(0..m, 0..n) {
-            if (p.0, p.1) == (q.0, q.1) {
+            if p == q {
                 // Same coordinates
                 continue;
             }
