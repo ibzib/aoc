@@ -16,13 +16,13 @@ fn main() {
     let mut antinode = vec![vec![false; n]; m];
     let mut ans = 0;
     for p in iproduct!(0..m, 0..n) {
+        if lines[p.0][p.1] == b'.' {
+            // Not an antenna
+            continue;
+        }
         for q in iproduct!(0..m, 0..n) {
             if p == q {
                 // Same coordinates
-                continue;
-            }
-            if lines[p.0][p.1] == b'.' {
-                // Not an antenna
                 continue;
             }
             if lines[p.0][p.1] != lines[q.0][q.1] {
