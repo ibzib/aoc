@@ -29,22 +29,21 @@ fn main() {
                 // Frequencies don't match
                 continue;
             }
-            // Find antinodes.
+            // Find antinode.
+            //
             // Use wrapping_sub to catch underflow (negatives) in our upper bounds check.
-            let antinodes = [
-                ((2 * p.0).wrapping_sub(q.0), (2 * p.1).wrapping_sub(q.1)),
-                ((2 * q.0).wrapping_sub(p.0), (2 * q.1).wrapping_sub(p.1)),
-            ];
-            for a in antinodes {
-                // check upper bounds
-                if !(a.0 < m && a.1 < n) {
-                    continue;
-                }
-                if !antinode[a.0][a.1] {
-                    // New antinode location found
-                    ans += 1;
-                    antinode[a.0][a.1] = true;
-                }
+            //
+            // Because the loop visits all pairs of points (p, q) in both orders (p, q) and (q, p),
+            // each iteration only needs to check one of the two antinodes.
+            let a = ((2 * p.0).wrapping_sub(q.0), (2 * p.1).wrapping_sub(q.1));
+            // check upper bounds
+            if !(a.0 < m && a.1 < n) {
+                continue;
+            }
+            if !antinode[a.0][a.1] {
+                // New antinode location found
+                ans += 1;
+                antinode[a.0][a.1] = true;
             }
         }
     }
