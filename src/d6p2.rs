@@ -23,9 +23,8 @@ fn traverse(lines: &Vec<Vec<u8>>, start_pos: (usize, usize), visited: &mut Visit
         if visited[pos.0][pos.1][d] {
             // We're stuck in a cycle
             return true;
-        } else {
-            visited[pos.0][pos.1][d] = true;
         }
+        visited[pos.0][pos.1][d] = true;
         loop {
             let next: (usize, usize) = get_next(pos, D[d]);
 
@@ -75,7 +74,7 @@ fn main() {
     // Don't worry too much about optimization here. You only need to try putting obstructions on spaces the guard would normally visit.
     for (i, line) in visited.iter().enumerate() {
         for (j, &v) in line.iter().enumerate() {
-            let vis = v.iter().fold(false, |a, &b| a || b);
+            let vis = v.iter().any(|&b| b);
             if vis && (i, j) != pos {
                 let mut visited_obstruction = new_visited_map(height, width);
                 lines[i][j] = b'#';
